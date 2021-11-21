@@ -14,8 +14,8 @@ function App() {
 
 
   const handleSubmitUser = e =>{
-    const name =nameRef.current.value;
-    const email =emailRef.current.value;
+    const name = nameRef.current.value;
+    const email = emailRef.current.value;
 
     const newUser = {name: name, email: email}
 
@@ -29,10 +29,21 @@ function App() {
       },
       body:JSON.stringify(newUser)
     })
+   .then(res => res.json())
+   .then(data => {
+     const addedUser = data;
+     const newUsers = [...users, addedUser];
+     setUsers(newUsers);
+   })
+
+   nameRef.current.value = '';
+   emailRef.current.value = '';
 
 
     e.preventDefault();
   }
+
+
   return (
     <div className="App">
       <h2>Found user: {users.length}</h2>
